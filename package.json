@@ -1,8 +1,8 @@
 {
-  "dependencies": {
-    "element-ui": "^2.15.14"
-  },
   "devDependencies": {
     "eslint-plugin-vue": "^9.25.0"
+  },
+  "dependencies": {
+    "element-plus": "^2.7.2"
   }
 }
