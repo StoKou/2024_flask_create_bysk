@@ -41,16 +41,6 @@ export default {
       ],
     };
   },
-  async created() {
-    try {
-      const response = await axios.get('/api/home');
-      this.homeData = response.data.homeData;
-      this.features = response.data.features;
-    } catch (error) {
-      console.error('Error fetching home page data:', error);
-      // 错误处理逻辑...
-    }
-  },
 };
 </script>
 

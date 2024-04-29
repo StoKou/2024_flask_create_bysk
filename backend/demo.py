@@ -19,9 +19,10 @@ for i in range(1, 16):  # 从1到15
     # 检查子表是否存在
     if table_name in mat_contents:
         features_last_col = mat_contents[table_name][:, :, -1]  # 提取最后一列特征
-        # summed_features = np.hstack((summed_features, features_last_col))  # 水平堆叠所有子表的最后一列特征
-        summed_features=np.array(features_last_col).reshape(-1, 1)
-        # 使用SVM模型进行预测
-        prediction=svm_model.predict(summed_features)
-        print("预测结果：de_LDS{i}", i,prediction)
-print(" ")
+        summed_features = np.hstack((summed_features, features_last_col))  # 水平堆叠所有子表的最后一列特征
+    
+summed_features=np.array(summed_features).reshape(-1, 1)
+# 使用SVM模型进行预测
+prediction = svm_model.predict(summed_features)#(输入特征为（62*K）)
+
+print("预测结果：", prediction)
