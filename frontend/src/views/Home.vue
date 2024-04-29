@@ -1,12 +1,12 @@
 <template>
   <div class="home-page">
     <header class="header">
-      <h1>欢迎来到首页</h1>
+      <h1>2024创新实践小组</h1>
     </header>
     <main class="main-content">
       <div class="intro-section">
-        <h2>{{ homeData?.title || '我们的愿景' }}</h2>
-        <p v-html="homeData?.description || '创新科技，美好生活。'"></p>
+        <h2>组员：时扣、陈亮亮</h2>
+        <p>going</p>
       </div>
       <div class="features">
         <div class="feature-item" v-for="item in features" :key="item.title">
@@ -23,24 +23,34 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'HomePage',
   data() {
     return {
-      homeData: null,
       features: [
-        // 假设从后端获取的features数据结构如下
-        // {
-        //   title: '产品创新',
-        //   description: '...',
-        //   image: '...'
-        // },
-        // ...
+        {
+          title: '特性一',
+          description: '这是特性一的描述。',
+          image: '/path/to/image1.png'
+        },
+        {
+          title: '特性二',
+          description: '这是特性二的描述。',
+          image: '/path/to/image2.png'
+        },
+        {
+          title: '特性三',
+          description: '这是特性三的描述。',
+          image: '/path/to/image3.png'
+        }
+        // 更多特性...
       ],
     };
   },
+  // 删除created钩子，因为它用于从后端获取数据
+  // created() {
+  //   ...
+  // },
 };
 </script>
 
