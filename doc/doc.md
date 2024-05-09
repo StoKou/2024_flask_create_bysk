@@ -106,6 +106,13 @@ Flask 的优点包括：
   - `seed-stimulation.xlsx` 
   - `subject-id-gender-seed.txt`
 
+### 数据集截图
+
+<div style="display: flex; justify-content: space-around;">
+  <img src="image.png" alt="Image 1" style="width: 280px; height: 500px;">
+  <img src="image-1.png" alt="Image 2" style="width: 280px; height: 500px;">
+  
+</div>
 
 ## 四、模型
 ### 1、SVM（不完全失败案例）
