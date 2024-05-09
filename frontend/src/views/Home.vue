@@ -29,18 +29,18 @@ export default {
     return {
       features: [
         {
-          title: '特性一',
-          description: '这是特性一的描述。',
+          title: '做汇报',
+          description: '做汇报',
           image: '/path/to/image1.png'
         },
         {
-          title: '特性二',
-          description: '这是特性二的描述。',
+          title: '写文档',
+          description: '写文档',
           image: '/path/to/image2.png'
         },
         {
-          title: '特性三',
-          description: '这是特性三的描述。',
+          title: '无',
+          description: '无',
           image: '/path/to/image3.png'
         }
         // 更多特性...

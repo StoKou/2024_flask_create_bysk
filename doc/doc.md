@@ -70,7 +70,10 @@ Flask 的优点包括：
 - `README.md`                  // 项目说明文件
 
 ### 2.功能
-* 
+#### 可视化
+展示方式没想到，暂时没做，难度不大
+
+#### 接口设计
 
 
 ## 四、数据集
@@ -87,13 +90,24 @@ Flask 的优点包括：
 | PSD          | 提取功率谱密度，用于分析信号的频率特性 |
 | RASM         | 有理不对称，涉及数学处理的不对称性  |
 | LDS         | 移动平均方式，用于处理噪声  |
+|ExtractedFeatures|未经处理的数据集|
+|Preprocessed_EEG|经过预处理后的数据集|
 
 ### 数据集结构
 
 - **SEED**
-- 
+  - **ExtractedFeatures**
+    - `1_20131027.mat` 
+    - ...
+  - **Preprocessed_EEG**
+    - `1_20131027.mat` 
+    - ...  
+  - `channel-order.xlsx`
+  - `seed-stimulation.xlsx` 
+  - `subject-id-gender-seed.txt`
 
 
 ## 四、模型
+### 1、SVM（不完全失败案例）
 
-
+### 2、

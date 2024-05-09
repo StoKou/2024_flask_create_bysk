@@ -44,7 +44,89 @@
 </template>
 
 <script>
-// ...原有 script 内容不变...
+import { ref } from "vue";
+
+export default {
+  name: "PredictPage",
+  setup() {
+    const fileInput = ref(null);
+    const loading = ref(false);
+    const result = ref("");
+    const selectedModel = ref("model1");
+
+    const onFileChange = (event) => {
+      // Simulate storing the selected file
+      const selectedFile = event.target.files[0];
+      console.log("Selected file:", selectedFile.name);
+    };
+
+    async function handleFormSubmit() {
+      loading.value = true;
+      try {
+        const formData = new FormData();
+        formData.append("file", fileInput.value.files[0]);
+
+        let response;
+        if (selectedModel.value === "model1") {
+          response = await fetch("/api/predict/model_1", {
+            method: "POST",
+            body: formData,
+          });
+        } else {
+          response = await fetch("/api/predict/model_2", {
+            method: "POST",
+            body: formData,
+          });
+        }
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        result.value = await response.text();
+        console.log("Prediction result:", result.value);
+
+        // Artificial delay to simulate API request latency
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        loading.value = false;
+      } catch (error) {
+        console.error("Error simulating prediction:", error);
+        loading.value = false;
+        alert("模拟预测失败，请检查上传的文件格式或稍后再试...");
+      }
+    }
+
+    // Interpret the numeric result into an emotional state
+    // Interpret the numeric result into an emotional state
+    function interpretResult() {
+      const emotionalState =
+        parseInt(result.value, 10) >= 0 && parseInt(result.value, 10) <= 2
+          ? "0" === result.value
+            ? "难过"
+            : "1" === result.value
+            ? "中性"
+            : "开心"
+          : "未知结果";
+
+      // Log the raw result to the console
+      console.log("Raw result from backend:", result.value);
+
+      // Return an object with both the raw and interpreted results
+      return { raw: result.value, interpreted: emotionalState };
+    }
+
+    return {
+      fileInput,
+      loading,
+      result,
+      handleFormSubmit,
+      onFileChange,
+      selectedModel,
+      interpretResult, // Expose the function to the template
+    };
+  },
+};
 </script>
 
 <style scoped>
