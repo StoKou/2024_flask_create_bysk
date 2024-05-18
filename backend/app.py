@@ -3,6 +3,8 @@ from flask_cors import CORS,cross_origin
 from openpyxl import load_workbook
 from app.Model.function.model1 import process_model_1
 from app.Model.function.model2 import process_model_2
+from app.Model.function.data_images_get_1 import data_images_get_1
+from app.Model.function.get_path import get_path
 
 app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})  # 允许所有域名跨域访问，可根据需求细化控制
@@ -53,12 +55,28 @@ def get_excel_data():
     }
 
     # 设置允许跨域的响应头信息（虽然在使用了 CORS 插件后通常不需要手动设置）
-    response = make_response(jsonify(data))
-    response.headers.add('Access-Control-Allow-Origin', '*')  # 允许所有域名访问，也可指定特定域名
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')  # 允许自定义请求头
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  # 允许的方法
+    response = jsonify(data)
+    # response.headers.add('Access-Control-Allow-Origin', '*')  # 允许所有域名访问，也可指定特定域名
+    # response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')  # 允许自定义请求头
+    # response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')  # 允许的方法
 
     return response
+
+@app.route('/api/expimage/get_1')
+def get_image_data():
+    # 指定.mat文件的路径
+    img_path = get_path(option="images")
+    
+     # 调用data_images_get_1函数获取数据
+    data = data_images_get_1(img_path)
+    
+    # 根据data字典中是否存在'error'键来判断是否发生了错误
+    if 'error' in data:
+        # 发生了错误，返回错误信息和500状态码
+        return jsonify(data), 500
+    else:
+        # 没有错误，正常返回数据
+        return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,17 +10,18 @@
         <p>正在加载实验图像数据...</p>
       </div>
       <div v-else>
-        <table border="1" v-if="data.categories && data.values">
+        <table border="1">
           <thead>
             <tr>
               <th>时间</th>
-              <th>数值1</th>
+              <th>数值</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(category, categoryIndex) in data.categories.slice(1)" :key="categoryIndex">
-              <td>{{ category }}</td>
-              <td>{{ data.values[categoryIndex] }}</td>
+            <!-- 使用 v-for 遍历 time 和 values 数组 -->
+            <tr v-for="(index, time) in data.time" :key="index">
+              <td>{{ time }}</td>
+              <td>{{ data.values[index] }}</td>
             </tr>
           </tbody>
         </table>
@@ -38,14 +39,15 @@ export default {
     return {
       loading: true,
       data: {
-        categories: [],
+        time: [],
         values: [],
       },
     };
   },
   async created() {
     try {
-      const response = await axios.get('/api/expimage');
+      const response = await axios.get('/api/expimage/get_1');
+      // 直接将返回的数据赋值给组件的data
       this.data = response.data;
       this.loading = false;
     } catch (error) {
