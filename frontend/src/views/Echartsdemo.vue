@@ -1,8 +1,16 @@
 <template>
-  <!-- Vue组件模板 -->
   <div id="app">
+    <!-- 添加一个标题显示name -->
+    <h1 v-if="chartOptions.name">{{ chartOptions.name }}</h1>
     <!-- 定义一个div作为ECharts图表容器，通过ref属性绑定到Vue实例上 -->
     <div ref="chart" style="width: 100%; height: 400px;"></div>
+    <!-- 添加目录选择器 -->
+    <select v-model="selectedCategory" @change="handleCategoryChange">
+      <option disabled value="">请选择目录</option>
+      <option v-for="category in categories" :key="category">{{ category }}</option>
+    </select>
+    <!-- 添加刷新按钮 -->
+    <button @click="fetchData">刷新</button>
   </div>
 </template>
 
@@ -11,79 +19,48 @@
 import * as echarts from 'echarts';
 import axios from 'axios';
 
-// 定义Vue组件
 export default {
-  // 给组件命名
   name: 'LineChartComponent',
-
-  // 初始化组件状态数据
   data() {
     return {
-      // 存储ECharts实例的引用
       chartInstance: null,
-      // 存储图表配置项
-      chartOptions: {},
-      // 存储类别标签数据
+      chartOptions: { name: '' },
       categories: [],
-      // 存储数值型数据
       values: [],
+      selectedCategory: '', // 用于v-model绑定的目录选择器
     };
   },
-
-  // 在组件挂载完成后执行fetchData方法获取数据
   mounted() {
     this.fetchData();
   },
-
-  // 定义组件的方法
   methods: {
-    // 异步获取数据的方法
     async fetchData() {
       try {
-        // 使用Axios发送GET请求到'/api/expimage'接口
-        const response = await axios.get('/api/expimage');
-
-        // 如果请求成功并且返回了有效数据
+        const response = await axios.get('/api/expimage/get_1', {
+          params: { category: this.selectedCategory } // 传递选中的目录作为参数
+        });
         if (response.data) {
-          // 将接收到的类别数据赋值给categories
+          this.chartOptions.name = response.data.name; // 设置图表名称
           this.categories = response.data.categories;
-          // 将接收到的数值数据赋值给values
           this.values = response.data.values;
-
-          // 数据准备好后初始化并绘制图表
           this.initChart();
         }
       } catch (error) {
-        // 如果请求过程中发生错误，打印错误信息
         console.error('Error fetching data:', error);
       }
     },
-
-    // 初始化并设置ECharts图表的方法
     initChart() {
-      // 使用ECharts初始化图表实例，传入已绑定的DOM元素ref="chart"
       this.chartInstance = echarts.init(this.$refs.chart);
-
-      // 设置图表的基本配置项，包括x轴（类别轴）、y轴（数值轴）和折线图系列数据
       this.chartOptions = {
-        xAxis: {
-          type: 'category', // x轴类型为分类轴
-          data: this.categories, // x轴数据来自this.categories
-        },
-        yAxis: {
-          type: 'value', // y轴类型为数值轴
-        },
-        series: [
-          {
-            // 折线图系列数据
-            data: this.values, 
-            type: 'line', // 图表类型为折线图
-          },
-        ],
+        title: { text: this.chartOptions.name }, // 设置图表标题
+        xAxis: { type: 'category', data: this.categories },
+        yAxis: { type: 'value' },
+        series: [{ data: this.values, type: 'line' }],
       };
-
-      // 设置ECharts实例的配置选项并更新图表
       this.chartInstance.setOption(this.chartOptions);
+    },
+    handleCategoryChange() {
+      this.fetchData(); // 当目录改变时重新获取数据
     },
   },
 };
@@ -91,13 +68,14 @@ export default {
 </script>
 
 <style scoped>
-/* CSS样式部分，只针对本组件内部生效 */
 #app {
-  /* 中心垂直和水平居中布局 */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  /* 组件高度充满整个视窗 */
   height: 100vh;
+  justify-content: space-around;
+}
+h1 {
+  margin-bottom: 20px; /* 给标题一些空间 */
 }
 </style>

@@ -36,8 +36,7 @@
       </div>
       <div v-if="result && !loading" class="prediction-result">
         <h3>模拟预测结果：</h3>
-        <p>原始结果：{{ interpretResult().raw }}</p>
-        <p>解释结果：{{ interpretResult().interpreted }}</p>
+        <p>原始结果：{{ result }}</p>
       </div>
     </section>
   </div>
@@ -97,25 +96,6 @@ export default {
       }
     }
 
-    // Interpret the numeric result into an emotional state
-    // Interpret the numeric result into an emotional state
-    function interpretResult() {
-      const emotionalState =
-        parseInt(result.value, 10) >= 0 && parseInt(result.value, 10) <= 2
-          ? "0" === result.value
-            ? "难过"
-            : "1" === result.value
-            ? "中性"
-            : "开心"
-          : "未知结果";
-
-      // Log the raw result to the console
-      console.log("Raw result from backend:", result.value);
-
-      // Return an object with both the raw and interpreted results
-      return { raw: result.value, interpreted: emotionalState };
-    }
-
     return {
       fileInput,
       loading,
@@ -123,7 +103,6 @@ export default {
       handleFormSubmit,
       onFileChange,
       selectedModel,
-      interpretResult, // Expose the function to the template
     };
   },
 };

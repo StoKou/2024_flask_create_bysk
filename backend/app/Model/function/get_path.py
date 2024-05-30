@@ -1,6 +1,8 @@
+import os
 
-path_images="E:\\pycharm\\demo\\my\\data\\SEED_process\\1_20131027\\de_LDS1_Split\\de_LDS1_0.mat"
-
+path_images="app/Data/images/1_20131027/de_LDS1_Split/de_LDS1_0.mat"
+#设置当前的目录结构，方便文件调用
+os.chdir('E:/VsCode\Vue3/vue0323/backend/')
 
 def get_path(option=None):
     """

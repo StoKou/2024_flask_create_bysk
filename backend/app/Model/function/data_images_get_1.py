@@ -27,12 +27,12 @@ def data_images_get_1(mat_file_path):
                 sequence_list=list(range(1, len(value_list) + 1))
                 # 创建一个二维列表，第一个维度是递增序列，第二个维度是 value_list
                 two_dimensional_list={
+                    'name':mat_file_path,
                     'time':sequence_list,
                     'values':value_list
                 }
-                # 将列表转换为JSON格式
-                json_data=json.dumps(two_dimensional_list)
-                return json_data
+        
+                return two_dimensional_list
         return None
     except Exception as e:
         # 如果读取.mat文件时发生错误，返回错误信息
