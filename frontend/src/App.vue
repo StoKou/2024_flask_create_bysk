@@ -3,8 +3,8 @@
     <!-- 优化过的原生导航栏 -->
     <nav class="custom-nav">
       <router-link to="/" class="nav-item">首页</router-link>
-      <router-link to="/expimage" class="nav-item">图像</router-link>
-      <router-link to="/echartsdemo" class="nav-item">测试</router-link>
+      <!-- <router-link to="/expimage" class="nav-item">图像</router-link> -->
+      <router-link to="/echartsdemo" class="nav-item">可视化</router-link>
       <router-link to="/predictpage" class="nav-item">预测</router-link>
       <router-link to="/about" class="nav-item">关于我们</router-link>
       <router-link to="/contact" class="nav-item">联系我们</router-link>

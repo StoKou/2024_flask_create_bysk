@@ -130,4 +130,33 @@ Flask 的优点包括：
 ## 四、模型
 ### 1、SVM（不完全失败案例）
 
-### 2、
+### 2、CNN
+![alt text](image-3.png)
+上面是SEED经过预处理后并且合并之后的数据
+![alt text](image-4.png)
+读取这些数据，按照62*200进行切分，不足200的部分舍去
+![alt text](image-5.png)
+针对其中一个样例，切分的结果如上（47001/200=235.005，向下取整，取235）
+![alt text](image-6.png)
+最终的预测标签的个数是3，因此对于每一个输入数据，经过处理，输出的最终矩阵格数就是（1 *3），因此训练的时候构造的训练label也是（1 *3）
+规定了输入格式为（62 *200），输出格式为（1 *3），处理完所有的数据后，后面要对数据进行划分，划分训练集和测试集
+![alt text](image-7.png)
+![alt text](image-8.png)
+训练集：测试集=0.8：0.2，上面是划分后的数据格式
+```python
+train_feature, train_label, test_feature, test_label = subject_independent_data_split(feature_vector_dict, label_dict,
+                                                                                      {'2', '6', '9'})
+```
+我们选取了2，6，9这三个作为最后的测试，其他全部作为训练数据
+之后需要使用pytorch训练，因此使用Dataset转化数据
+![alt text](image-9.png)
+我们选择的batch_size=24，因此122184/24=5091，因此一次需要5091次训练，这就算一个epoch
+之后就是进行正常的训练，由于使用Dataset数据格式，最终得到的数据格式如下
+![alt text](image-10.png)
+（batch_size,1，62，200）
+![alt text](image-11.png)
+一个batch是24个，因此label也是（1*24）
+
+开始写后端导入模型代码
+![alt text](image-12.png)
+这是处理之后的test_feature 
