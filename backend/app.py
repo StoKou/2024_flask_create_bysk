@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app, resources={r'/*': {'origins': '*'}})  # 允许所有域名跨域访问，可根据需求细化控制
 
 # 假设这里是您从数据库或其他来源获取的数据
-sample_home_data = {
+sample_home_data = { 
     "title": "首页标题",
     "description": "<p>欢迎来到我们的网站！这里有一些关于我们的pi介绍和最新动态。</p>"
 }
